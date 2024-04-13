@@ -4,11 +4,14 @@ import axios from "axios";
 
 function App() {
   const [data, setData] = useState(null);
+  const [date, setDate] = useState("2023-04-13");
+
+  const myAPIKey = "0hwvX60oIkSCUNm1zvuTDZ84DbxIDgbDhqtTLEFz";
 
   useEffect(() => {
     axios
       .get(
-        "https://api.nasa.gov/planetary/apod?api_key=0hwvX60oIkSCUNm1zvuTDZ84DbxIDgbDhqtTLEFz&date=2023-04-13"
+        `https://api.nasa.gov/planetary/apod?api_key=${myAPIKey}&date=${date}`
       )
       .then((response) => {
         //console.log(response.data);
@@ -20,10 +23,15 @@ function App() {
       .finally(() => {
         //console.log("axios bitti");
       });
-  }, []);
+  }, [date]);
 
   return (
     <div className="App">
+      <input
+        type="date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+      />
       {data ? (
         <>
           <h1>{data.title}</h1>
