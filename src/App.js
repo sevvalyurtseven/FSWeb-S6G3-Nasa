@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
+import ImgViewer from "./components/ImgViewer";
+import VideoViewer from "./components/VideoViewer";
 
 function App() {
   const [data, setData] = useState(null);
-  const [date, setDate] = useState("2023-04-13");
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
 
   const myAPIKey = "0hwvX60oIkSCUNm1zvuTDZ84DbxIDgbDhqtTLEFz";
 
   useEffect(() => {
     axios
       .get(
-        `https://api.nasa.gov/planetary/apod?api_key=${myAPIKey}&date=${date}`
+        `https://api.nasa.gov/planetary/apod?api_key=${myAPIKey}&date=${date}&thumbs=true`
       )
       .then((response) => {
         //console.log(response.data);
@@ -32,12 +34,14 @@ function App() {
         value={date}
         onChange={(e) => setDate(e.target.value)}
       />
+
       {data ? (
         <>
-          <h1>{data.title}</h1>
-          <img src={data.url} alt={data.title} />
-          <p>{data.explanation}</p>
-          <p>{data.copyright}</p>
+          {data.media_type === "video" ? (
+            <VideoViewer data={data} />
+          ) : (
+            <ImgViewer data={data} />
+          )}
         </>
       ) : (
         <h1>Loading...</h1>
