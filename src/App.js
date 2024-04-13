@@ -24,14 +24,16 @@ function App() {
 
   return (
     <div className="App">
-      <p>
-        NASA uygulamasını yapmak için README.md dosyasıdaki talimatları takip
-        edin İyi eğlenceler!{" "}
-        <span role="img" aria-label="go!">
-          🚀
-        </span>
-        !
-      </p>
+      {data ? (
+        <>
+          <h1>{data.title}</h1>
+          <img src={data.url} alt={data.title} />
+          <p>{data.explanation}</p>
+          <p>{data.copyright}</p>
+        </>
+      ) : (
+        <h1>Loading...</h1>
+      )}
     </div>
   );
 }
